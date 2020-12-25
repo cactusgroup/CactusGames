@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>JC Design's Game Site - Mathematics in Space Shooter</title>
+        <title>Mathematics in Space Shooter | CactusGames</title>
         <link rel="stylesheet" type="text/css" href="style.css" />
     </head>
     <body>
@@ -43,47 +43,53 @@
             
             <div class="content">
                 <div class="text-bg">
-                    <h1>Mathematics in Space Shooter</h1>
-                    <p class="wd">
-                        <h2 class="wd">
-                            Mouse Tracking
-                        </h2>
-                        In XNA, the definition of the location of anything in the gameplay area is a vector starting from the origin of the gameplay area pointing to where that &ldquo;anything&rdquo; is.
-                        For example, there is the protagonist sprite and the mouse. Here are their locations from the origin of the gameplay area. (You&rsquo;ll notice something strange about the axes: the y-axis points downwards!)
-                        <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image002.jpg" />
-                        What I want to find now is a way to rotate the protagonist sprite so that it points towards the location of the mouse. For that, I need to label the vectors, add two more vectors, explain a little bit about how angles are measured in XNA, and use a vector operation called the dot product. Here&rsquo;s the picture detailing the labeled and added vectors:
-                        <img class= "wd" src="img/Mathematics_in_Space_Shooter_files/image004.jpg" />
-                        The two new vectors here are <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />, the vector difference between the position of the mouse and the position of the sprite, and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />, which is the unit vector in the opposite direction of the <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis.
-                        &nbsp;
-                        Now, in XNA, if a sprite is rotated 0&deg;, it points in the direction of the positive <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis. Therefore, to have the sprite point in the direction of the negative <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis, the sprite must begin with a rotation of 180&deg;.
-                        &nbsp;
-                        In order to find the angle between the unit vector <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />&nbsp;and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />, I used the dot product:
-                        <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image012.png" />
-                        or
-                        <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image014.png" />
-                        where the dot stands for the dot product and the vertical bars stand for the absolute value.
-                        &nbsp;
-                        Now all I have to do is put in the vectors I want to find the angle between, namely <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />&nbsp;and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />. This gets me:
-                        <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image018.png" />
-                        &nbsp;
-                        Then, I either add or subtract this angle from 180&deg; depending if the mouse is to the right or to the left of the sprite, respectively.
+                    <article>
+                        <h1>Mathematics in Space Shooter</h1>
+                        <section>
+                            <p class="wd">
+                                <h2 class="wd">
+                                    Mouse Tracking
+                                </h2>
+                                In XNA, the definition of the location of anything in the gameplay area is a vector starting from the origin of the gameplay area pointing to where that &ldquo;anything&rdquo; is.
+                                For example, there is the protagonist sprite and the mouse. Here are their locations from the origin of the gameplay area. (You&rsquo;ll notice something strange about the axes: the y-axis points downwards!)
+                                <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image002.jpg" />
+                                What I want to find now is a way to rotate the protagonist sprite so that it points towards the location of the mouse. For that, I need to label the vectors, add two more vectors, explain a little bit about how angles are measured in XNA, and use a vector operation called the dot product. Here&rsquo;s the picture detailing the labeled and added vectors:
+                                <img class= "wd" src="img/Mathematics_in_Space_Shooter_files/image004.jpg" />
+                                The two new vectors here are <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />, the vector difference between the position of the mouse and the position of the sprite, and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />, which is the unit vector in the opposite direction of the <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis.
+                                &nbsp;
+                                Now, in XNA, if a sprite is rotated 0&deg;, it points in the direction of the positive <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis. Therefore, to have the sprite point in the direction of the negative <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image010.png" />-axis, the sprite must begin with a rotation of 180&deg;.
+                                &nbsp;
+                                In order to find the angle between the unit vector <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />&nbsp;and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />, I used the dot product:
+                                <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image012.png" />
+                                or
+                                <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image014.png" />
+                                where the dot stands for the dot product and the vertical bars stand for the absolute value.
+                                &nbsp;
+                                Now all I have to do is put in the vectors I want to find the angle between, namely <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image008.png" />&nbsp;and <img class="wdinline" src="img/Mathematics_in_Space_Shooter_files/image006.png" />. This gets me:
+                                <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image018.png" />
+                                &nbsp;
+                                Then, I either add or subtract this angle from 180&deg; depending if the mouse is to the right or to the left of the sprite, respectively.
 
-                        Now the sprite can track the mouse.
-                    </p>
-                    <p class="wd">
-                        <h2 class="wd">
-                           Reflection
-                        </h2>
-                        In Space Shooters, after firing all of their ammunition, the wasp UFOs will go off in a random direction and bounce off the walls of the gameplay area. When they bounce, they change direction, and in addition to the velocity changing, I wanted the rotation to convey that. So, having said that, let me explain how this was done&mdash;with pictures.
-                        <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image019.png" />
-                        And there you have it.
-                    </p>
+                                Now the sprite can track the mouse.
+                            </p>
+                        </section>
+                        <section>
+                            <p class="wd">
+                                <h2 class="wd">
+                                   Reflection
+                                </h2>
+                                In Space Shooters, after firing all of their ammunition, the wasp UFOs will go off in a random direction and bounce off the walls of the gameplay area. When they bounce, they change direction, and in addition to the velocity changing, I wanted the rotation to convey that. So, having said that, let me explain how this was done&mdash;with pictures.
+                                <img class="wd" src="img/Mathematics_in_Space_Shooter_files/image019.png" />
+                                And there you have it.
+                            </p>
+                        </section>
+                    </article>
                 </div>
             </div>
             
             <div class="footer">
                 <div class="text-bg">
-                    <p class="footer">Copyright JC Design 2014</p>
+                    <p class="footer">Copyright CactusGames 2022</p>
                 </div>
             </div>
         </div>

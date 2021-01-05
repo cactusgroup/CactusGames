@@ -1,7 +1,3 @@
-function startGame() {
-    gameArea.start();
-}
-
 function Vector2(x, y) {
     this.x = x;
     this.y = y;
@@ -198,6 +194,10 @@ var gameArea = {
         this.context.clearRect(0, 0, 
             this.canvas.width, this.canvas.height);
     }
+}
+
+function startGame() {
+    gameArea.start();
 }
 
 function initializeCORs() {

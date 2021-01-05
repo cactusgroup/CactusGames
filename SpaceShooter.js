@@ -17,5 +17,5 @@ var gameArea = {
 }
 
 function updateGameArea() {
-    myGameArea.clear();
+    gameArea.clear();
 }

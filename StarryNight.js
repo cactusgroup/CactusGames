@@ -279,7 +279,7 @@ function equals(theta1, theta2, epsilon = 0.0005) {
     return Math.abs(theta2 - theta1) < epsilon;
 }
 
-function loadContent() {
+async function loadContent() {
     gameArea.spriteBatch = new SpriteBatch(gameArea.context);
 
     // satellites and pseudosatellites

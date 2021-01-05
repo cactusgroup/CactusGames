@@ -1,3 +1,7 @@
+function startGame() {
+    gameArea.start();
+}
+
 function Vector2(x, y) {
     this.x = x;
     this.y = y;
@@ -44,11 +48,11 @@ function SpriteBatch(context) {
         });
 
         for (let i = 0; i < this.batch.length; i++) {
-            if (batch[i].color === "white") {
+            if (this.batch[i].color === "white") {
                 context.drawImage(
-                    batch[i].texture,
-                    batch[i].position.getX(),
-                    batch[i].position.getY());
+                    this.batch[i].texture,
+                    this.batch[i].position.getX(),
+                    this.batch[i].position.getY());
             }
         }
 
@@ -73,18 +77,18 @@ var gameArea = {
     PKMN_TREE_INFRONTOF_TREE : 0.45,
 
     // angles
-    pkmnMoonθ : 0,
-    pkmnTreeθ : 0,
-    moonθ : 0,
-    sunθ : 0,
-    skyθ : 0,
+    pkmnMoon_theta : 0,
+    pkmnTree_theta : 0,
+    moon_theta : 0,
+    sun_theta : 0,
+    sky_theta : 0,
 
     // angular velocity
-    pkmnMoonω : 0,
-    pkmnTreeω : 0,
-    moonω : 0,
-    sunω : 0,
-    skyω : 0,
+    pkmnMoon_omega : 0,
+    pkmnTree_omega : 0,
+    moon_omega : 0,
+    sun_omega : 0,
+    sky_omega : 0,
 
     // locations
     pkmnMoonLoc : new Vector2(0, 0),
@@ -131,10 +135,10 @@ var gameArea = {
     savedState : {},
     kbdState : {},
     kbdLogger : function() {
-        this.canvas.onkeydown = function(e) {
+        document.getElementById("gameCanvas").onkeydown = function(e) {
             kbdState[e.code] = true;
         };
-        this.canvas.onkeyup = function(e) {
+        document.getElementById("gameCanvas").onkeyup = function(e) {
             delete kbdState[e.code];
         };
     }(),
@@ -182,11 +186,11 @@ var gameArea = {
         initializeLocs();
 
         //initial angles and angular velocities
-        pkmnMoonθ = pkmnTreeθ = moonθ = sunθ = skyθ = 0;
-        pkmnMoonω = Math.PI / 15;
-        pkmnTreeω = Math.PI / 150;
-        moonω = sunω = Math.PI / 150;
-        skyω = Math.PI / 15;
+        pkmnMoon_theta = pkmnTree_theta = moon_theta = sun_theta = sky_theta = 0;
+        pkmnMoon_omega = Math.PI / 15;
+        pkmnTree_omega = Math.PI / 150;
+        moon_omega = sun_omega = Math.PI / 150;
+        sky_omega = Math.PI / 15;
 
         loadContent();
         },
@@ -196,23 +200,19 @@ var gameArea = {
     }
 }
 
-function startGame() {
-    gameArea.start();
-}
-
 function initializeCORs() {
     gameArea.skyCOR = new Vector2(737.5, 737.5);
     gameArea.moonCOR = new Vector2(-448, 0);
     gameArea.sunCOR = new Vector2(608, 0);
     //starCORs initialized randomly
     gameArea.landscapeCOR = new Vector2(0, 0);
-    gameArea.treeCOR = landscapeCOR;
+    gameArea.treeCOR = gameArea.landscapeCOR;
     gameArea.pkmnMoonCOR = new Vector2(57.5, 52.5);
 
     //pkmnTree changes COR
     gameArea.pkmnTreeGroundCOR = new Vector2(50.5, 35);
     gameArea.pkmnTreeOrbitCOR = new Vector2(50.5, 52);
-    gameArea.pkmnTreeCOR = pkmnTreeGroundCOR;
+    gameArea.pkmnTreeCOR = gameArea.pkmnTreeGroundCOR;
 }
 
 function initializeLocs() {
@@ -247,32 +247,32 @@ function initializeLocs() {
         395 + gameArea.pkmnTreeCOR.getX(),
         595 + gameArea.pkmnTreeCOR.getY()
     );
-    pkmnTreeOrbitLoc = moonCenterPosition();
-    pkmnTreeLoc = pkmnTreeGroundLoc;
+    gameArea.pkmnTreeOrbitLoc = moonCenterPosition();
+    gameArea.pkmnTreeLoc = gameArea.pkmnTreeGroundLoc;
 }
 
 function moonCenterPosition() {
     return new Vector2(
-        528 * Math.cos(moonθ) + 400,
-        528 * Math.sin(moonθ) + 700
+        528 * Math.cos(gameArea.moon_theta) + 400,
+        528 * Math.sin(gameArea.moon_theta) + 700
     );
 }
 
 function pkmnMoonCenterPosition() {
     let moonCenter = moonCenterPosition();
     return new Vector2(
-        moonCenter.getX() + 137.5 * Math.cos(10 * moonθ),
-        moonCenter.getY() + 137.5 * Math.sin(10 + moonθ)
+        moonCenter.getX() + 137.5 * Math.cos(10 * gameArea.moon_theta),
+        moonCenter.getY() + 137.5 * Math.sin(10 + gameArea.moon_theta)
     );
 }
 
 function pkmnTreeBottomEdgeYValue() {
-    return pkmnTreeLoc.getY() - pkmnTreeCOR.getY() +
-        pkmnTree.height * pkmnTreeScale;
+    return gameArea.pkmnTreeLoc.getY() - gameArea.pkmnTreeCOR.getY() +
+        gameArea.pkmnTree.height * gameArea.pkmnTreeScale;
 }
 
 function treeBottomEdgeYValue() {
-    return treeLoc.Y + tree.height;
+    return gameArea.treeLoc.Y + gameArea.tree.height;
 }
 
 function equals(theta1, theta2, epsilon = 0.0005) {
@@ -318,72 +318,73 @@ function updateGameArea() {
 
     gameArea.pkmnTreeOrbitLoc = moonCenterPosition();
 
-    moonθ += moonω;
-    sunθ += sunω;
-    pkmnMoonθ += pkmnMoonω
+    gameArea.moon_theta += gameArea.moon_omega;
+    gameArea.sun_theta += gameArea.sun_omega;
+    gameArea.pkmnMoon_theta += gameArea.pkmnMoon_omega
 
-    if (equals(moonθ % (2*Math.PI), 0) && moonθ > (2*Math.PI))
-        moonθ %= (2*Math.PI);
+    if (equals(gameArea.moon_theta % (2*Math.PI), 0)
+        && gameArea.moon_theta > (2*Math.PI))
+        gameArea.moon_theta %= (2*Math.PI);
 
-    if ("Space" in kbdState && !("Space" in savedState)) {
-        if (((4 * Math.PI / 3) < moonθ && moonθ < (5 * Math.PI / 3))
-            || (2*Math.PI + 4 * Math.PI / 3) < moonθ && moonθ < (2*Math.PI + 5 * Math.PI / 3)) {
-            pkmnTreeOrbiting = !pkmnTreeOrbiting;
+    if ("Space" in gameArea.kbdState && !("Space" in gameArea.savedState)) {
+        if (((4 * Math.PI / 3) < gameArea.moon_theta && gameArea.moon_theta < (5 * Math.PI / 3))
+            || (2*Math.PI + 4 * Math.PI / 3) < gameArea.moon_theta && gameArea.moon_theta < (2*Math.PI + 5 * Math.PI / 3)) {
+            gameArea.pkmnTreeOrbiting = !gameArea.pkmnTreeOrbiting;
 
-            if (pkmnTreeOrbiting) {
-                pkmnTreeCOR = pkmnTreeOrbitCOR;
-                pkmnTreeScale = 1;
-                pkmnTreeDepth = PKMN_TREE_INFRONTOF_MOON;
+            if (gameArea.pkmnTreeOrbiting) {
+                gameArea.pkmnTreeCOR = gameArea.pkmnTreeOrbitCOR;
+                gameArea.pkmnTreeScale = 1;
+                gameArea.pkmnTreeDepth = PKMN_TREE_INFRONTOF_MOON;
             } else {
-                pkmnTreeCOR = pkmnTreeGroundCOR;
-                pkmnTreeLoc = pkmnTreeGroundLoc;
-                pkmnTreeDepth = PKMN_TREE_INFRONTOF_TREE;
+                gameArea.pkmnTreeCOR = gameArea.pkmnTreeGroundCOR;
+                gameArea.pkmnTreeLoc = gameArea.pkmnTreeGroundLoc;
+                gameArea.pkmnTreeDepth = PKMN_TREE_INFRONTOF_TREE;
             }
         }
     }
 
-    if (pkmnTreeOrbiting) {
-        pkmnTreeLoc = moonCenterPosition();
+    if (gameArea.pkmnTreeOrbiting) {
+        gameArea.pkmnTreeLoc = moonCenterPosition();
     } else {
-        if ("ArrowUp" in kbdState)
-            pkmnTreeScale -= 0.05;
-        if ("ArrowDown" in kbdState)
-            pkmnTreeScale += 0.05;
-        if ("ArrowLeft" in kbdState)
-            pkmnTreeLoc.setX(pkmnTreeLoc.getX() - 5);
-        if ("ArrowRight" in kbdState)
-            pkmnTreeLoc.setX(pkmnTreeLoc.getX() + 5);
+        if ("ArrowUp" in gameArea.kbdState)
+            gameArea.pkmnTreeScale -= 0.05;
+        if ("ArrowDown" in gameArea.kbdState)
+            gameArea.pkmnTreeScale += 0.05;
+        if ("ArrowLeft" in gameArea.kbdState)
+            gameArea.pkmnTreeLoc.setX(gameArea.pkmnTreeLoc.getX() - 5);
+        if ("ArrowRight" in gameArea.kbdState)
+            gameArea.pkmnTreeLoc.setX(gameArea.pkmnTreeLoc.getX() + 5);
 
         if (pkmnTreeBottomEdgeYValue() > treeBottomEdgeYValue())
-            pkmnTreeDepth = PKMN_TREE_INFRONTOF_TREE;
+            gameArea.pkmnTreeDepth = gameArea.PKMN_TREE_INFRONTOF_TREE;
         else if (pkmnTreeBottomEdgeYValue < treeBottomEdgeYValue())
-            pkmnTreeDepth = PKMN_TREE_BEHIND_TREE;
+            gameArea.pkmnTreeDepth = gameArea.PKMN_TREE_BEHIND_TREE;
         else
-            pkmnTreeDepth = TREE;
+            gameArea.pkmnTreeDepth = gameArea.TREE;
     }
     
-    savedState = kbdState;
-    draw();
+    gameArea.savedState = gameArea.kbdState;
+    draw(gameArea.spriteBatch);
 }
 
-function draw() {
-    spriteBatch.begin(SpriteSortMode.BackToFront, null);
+function draw(spriteBatch) {
+    spriteBatch.begin("back-to-front", null);
     
     // texture, position, --sourceRectangle--, color, rotation, origin, scale, --effects--, layerDepth
-    spriteBatch.draw(sky, skyLoc, "white", skyθ, skyCOR, 1, SKY);
-    spriteBatch.draw(moon, moonLoc, "white", moonθ, moonCOR, 1, MOON);
-    spriteBatch.draw(sun, sunLoc, "white", sunθ, sunCOR, 1, MOON);
+    spriteBatch.draw(gameArea.sky, gameArea.skyLoc, "white", gameArea.sky_theta, gameArea.skyCOR, 1, gameArea.SKY);
+    spriteBatch.draw(gameArea.moon, gameArea.moonLoc, "white", gameArea.moon_theta, gameArea.moonCOR, 1, gameArea.MOON);
+    spriteBatch.draw(gameArea.sun, gameArea.sunLoc, "white", gameArea.sun_theta, gameArea.sunCOR, 1, gameArea.MOON);
     
-    for (let i = 0; i < stars.Length; i++)
-        spriteBatch.draw(stars[i], starLocs[i], GetColor(), skyθ, starCORs[i], 1, STARS);
+    for (let i = 0; i < gameArea.stars.Length; i++)
+        spriteBatch.draw(gameArea.stars[i], gameArea.starLocs[i], GetColor(), gameArea.sky_theta, gameArea.starCORs[i], 1, gameArea.STARS);
 
     //stationary
-    spriteBatch.draw(landscape, landscapeLoc, "white", 0, landscapeCOR, 1, LANDSCAPE);
-    spriteBatch.draw(tree, treeLoc, "white", 0, treeCOR, 1, TREE);
+    spriteBatch.draw(gameArea.landscape, gameArea.landscapeLoc, "white", 0, gameArea.landscapeCOR, 1, gameArea.LANDSCAPE);
+    spriteBatch.draw(gameArea.tree, gameArea.treeLoc, "white", 0, gameArea.treeCOR, 1, gameArea.TREE);
 
     // rotating and scaled objects
-    spriteBatch.draw(pkmnMoon, PkmnMoonCenterPosition(), "white", pkmnMoonθ, pkmnMoonCOR, 1, PKMN_MOON);
-    spriteBatch.draw(pkmnTree, pkmnTreeLoc, "white", pkmnTreeθ, pkmnTreeCOR, pkmnTreeScale, pkmnTreeDepth);
+    spriteBatch.draw(gameArea.pkmnMoon, pkmnMoonCenterPosition(), "white", gameArea.pkmnMoon_theta, gameArea.pkmnMoonCOR, 1, gameArea.PKMN_MOON);
+    spriteBatch.draw(gameArea.pkmnTree, gameArea.pkmnTreeLoc, "white", gameArea.pkmnTree_theta, gameArea.pkmnTreeCOR, gameArea.pkmnTreeScale, gameArea.pkmnTreeDepth);
 
     spriteBatch.end();
 }

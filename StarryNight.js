@@ -279,38 +279,37 @@ function equals(theta1, theta2, epsilon = 0.0005) {
     return Math.abs(theta2 - theta1) < epsilon;
 }
 
-async function loadContent() {
+function loadContent() {
     gameArea.spriteBatch = new SpriteBatch(gameArea.context);
 
     // satellites and pseudosatellites
     gameArea.sky.src = "img/StarryNight/Sky.png";
-    gameArea.sky = await createImageBitmap(gameArea.sky);
-
     gameArea.moon.src = "img/StarryNight/Moon.png";
-    gameArea.moon = await createImageBitmap(gameArea.moon);
-    
     gameArea.sun.src = "img/StarryNight/Sun.png";
-    gameArea.sun = await createImageBitmap(gameArea.sun);
-
+    console.log(gameArea.stars);
     for (let i = 0; i < gameArea.stars.length; i++) {
-        gameArea.stars[i].src =
-            "img/StarryNight/Star.png";
-        gameArea.stars[i] = await createImageBitmap(gameArea.stars[i]);
+        gameArea.stars[i] = new Image();
+        gameArea.stars[i].src = "img/StarryNight/Star.png";
     }
-    
     // stationary objects
     gameArea.landscape.src = "img/StarryNight/Landscape.png";
-    gameArea.landscape = await createImageBitmap(gameArea.landscape);
-
     gameArea.tree.src = "img/StarryNight/Tree.png";
-    gameArea.tree = await createImageBitmap(gameArea.tree);
-
     // rotating and scaled objects
     gameArea.pkmnMoon.src = "img/StarryNight/Charmander.png";
-    gameArea.pkmnMoon = await createImageBitmap(gameArea.pkmnMoon);
-
     gameArea.pkmnTree.src = "img/StarryNight/Squirtle.png";
-    gameArea.pkmnTree = await createImageBitmap(gameArea.pkmnTree);
+
+    // let the images load asynchronously
+    setTimeout(async () => {
+        gameArea.sky = await createImageBitmap(gameArea.sky);
+        gameArea.moon = await createImageBitmap(gameArea.moon);
+        gameArea.sun = await createImageBitmap(gameArea.sun);
+        for (let i = 0; i < gameArea.stars.length; i++)
+            gameArea.stars[i] = await createImageBitmap(gameArea.stars[i]);
+        gameArea.landscape = await createImageBitmap(gameArea.landscape);
+        gameArea.tree = await createImageBitmap(gameArea.tree);    
+        gameArea.pkmnMoon = await createImageBitmap(gameArea.pkmnMoon);
+        gameArea.pkmnTree = await createImageBitmap(gameArea.pkmnTree);
+    }, 500);
 }
 
 function updateGameArea() {

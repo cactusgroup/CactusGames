@@ -187,8 +187,8 @@ var gameArea = {
                 395 - locs[i][0], 615 - locs[i][1]
             );
             this.starLocs[i] = new Vector2(
-                locs[i][0]/* + this.starCORs[i].getX()*/,
-                locs[i][1]/* + this.starCORs[i].getY()*/
+                locs[i][0] + this.starCORs[i].getX(),
+                locs[i][1] + this.starCORs[i].getY()
             );
         }
         

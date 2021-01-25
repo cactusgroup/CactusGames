@@ -1,3 +1,7 @@
+window.addEventListener('load', () => {
+    startGame();
+}, false);
+
 function startGame() {
     gameArea.start();
 }
@@ -49,10 +53,20 @@ function SpriteBatch(context) {
 
         for (let i = 0; i < this.batch.length; i++) {
             if (this.batch[i].color === "white") {
+                // context.translate(
+                //     this.batch.origin.getX(),
+                //     this.batch.origin.getY()
+                // );
+                // context.rotate(this.batch.rotatioon);
+                // context.translate(
+                //     -this.batch.origin.getX(),
+                //     -this.batch.origin.getY()
+                // );
                 context.drawImage(
                     this.batch[i].texture,
                     this.batch[i].position.getX(),
                     this.batch[i].position.getY());
+                context.setTransform(1, 0, 0, 1, 0, 0);
             }
         }
 
@@ -173,8 +187,8 @@ var gameArea = {
                 395 - locs[i][0], 615 - locs[i][1]
             );
             this.starLocs[i] = new Vector2(
-                locs[i][0] + this.starCORs[i].getX(),
-                locs[i][1] + this.starCORs[i].getY()
+                locs[i][0]/* + this.starCORs[i].getX()*/,
+                locs[i][1]/* + this.starCORs[i].getY()*/
             );
         }
         
